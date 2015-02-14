@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -81,6 +83,13 @@ public class Robot extends IterativeRobot {
 	CANTalon manipulator;
 	Gyro gyro;
 	AnalogInput analogin;
+//	PIDController pidRightfront;
+//	PIDController pidLeftfront;
+//	PIDController pidLeftrear;
+//	PIDController pidRightrear;
+	MotorPIDSubsystem leftSub;
+	MotorPIDSubsystem rightSub;
+
 	
 	
 	/**
@@ -136,7 +145,18 @@ public class Robot extends IterativeRobot {
    	    gyro.reset();
    	    double velocityleft = 0.0;
    	    double velocityright = 0.0;
-		//analogin = new AnalogInput(0);
+   	    final double pterm = 1;
+   	    final double iterm = 0;
+   	    final double dterm = 0;
+   	    final double ffterm = 0;
+//   	    pidRightfront = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveRightFrontOrange);
+//   	    pidRightrear = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveRightRearBlue);
+//   	    pidLeftfront = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveLeftFrontBrown);
+//   	    pidLeftrear = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveLeftRearWhite);
+   	   
+   	    leftSub = new MotorPIDSubsystem( driveLeftFrontBrown, driveLeftRearWhite,encoderleft, "left");
+   	    leftSub = new MotorPIDSubsystem(driveRightFrontOrange, driveRightRearBlue, encoderright, "right");
+   	    //analogin = new AnalogInput(0);
 		
 		//server = CameraServer.getInstance();
 		//server.setSize(1);
@@ -244,7 +264,22 @@ public class Robot extends IterativeRobot {
 					
 						
 						
-							myRobot.tankDrive(stick.getRawAxis(1), stick.getRawAxis(5));
+							//myRobot.tankDrive(stick.getRawAxis(1), stick.getRawAxis(5));
+							/*
+							pidLeftfront.setSetpoint(0);
+							pidLeftrear.setSetpoint(0);
+							pidRightfront.setSetpoint(0);
+							pidRightrear.setSetpoint(0);
+						*/
+//						pterm = pterm;
+//							pidLeftfront.setSetpoint(stick.getRawAxis(1));
+//							pidLeftrear.setSetpoint(stick.getRawAxis(1));
+//							pidRightfront.setSetpoint(stick.getRawAxis(5));
+//							pidRightrear.setSetpoint(stick.getRawAxis(5));
+//							
+							leftSub.setSetpoint(stick.getRawAxis(1));
+							rightSub.setSetpoint(stick.getRawAxis(5));
+							/*
 							if(!manipulator.isFwdLimitSwitchClosed())
 							{
 								System.out.println("forward switch pushedd");
@@ -253,6 +288,7 @@ public class Robot extends IterativeRobot {
 							{
 								System.out.println("back switch pushedd");
 							}
+							*/
 						
 						SmartDashboard.putNumber("front left current", pdp.getCurrent(15));
 						SmartDashboard.putNumber("front right current", pdp.getCurrent(1));
@@ -373,7 +409,6 @@ public class Robot extends IterativeRobot {
 					protected void execute() {
 						// TODO Auto-generated method stub
 						myRobot.tankDrive((stick.getRawAxis(1)*.75), (stick.getRawAxis(5)*.75));
-						
 						SmartDashboard.putNumber("front left current", pdp.getCurrent(15));
 						SmartDashboard.putNumber("front right current", pdp.getCurrent(1));
 						SmartDashboard.putNumber("back left current", pdp.getCurrent(14));
@@ -511,6 +546,10 @@ public class Robot extends IterativeRobot {
 		System.out.println("teleinit");
 		demoCommand = (Command) demochooser.getSelected();
 		demoCommand.start();
+//		pidLeftfront.enable();
+//		pidLeftrear.enable();
+//		pidRightfront.enable();
+//		pidRightrear.enable();
 		
 //		manipulator.changeControlMode(CANTalon.ControlMode.PercentVbus);
 //		manipulator.setFeedbackDevice(CANTalon.FeedbackDevice.AnalogPot);
