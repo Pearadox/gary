@@ -9,27 +9,35 @@ public class MotorPIDSubsystem extends PIDSubsystem {
 	Encoder encoder;
 	
 	
-	public MotorPIDSubsystem(SpeedController front, SpeedController rear,
-			Encoder enc, String name ) 
+	public MotorPIDSubsystem(String name, SpeedController front, SpeedController rear,
+			Encoder enc) 
 	{
-		super(name, 0.5, 0.0, 0.0);
+		super(name, .5, 0.0, 0.0);
 		motorFront = front;
 		motorRear = rear;
 		encoder = enc;
 		
 	}
 	
-	public void initDefaultCommand(){
+	public void initDefaultCommand()
+	{
 		
 	}
 	
-	protected double returnPIDInput(){
+	protected double returnPIDInput()
+	{
 		return encoder.getRate();
 	}
 	
-	protected void usePIDOutput(double output) {
+	protected void usePIDOutput(double output) 
+	{
 		motorFront.pidWrite(output);
 		motorRear.pidWrite(output);
 	}
+
+	
+	
+		
+	
 
 }

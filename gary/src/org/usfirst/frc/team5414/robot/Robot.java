@@ -65,8 +65,8 @@ public class Robot extends IterativeRobot {
 	SpeedController driveLeftRearWhite;
 	SpeedController driveRightRearBlue;
 	SpeedController driveLeftFrontBrown;
-	//SpeedController driveLeft;
-	//SpeedController driveRight;
+	SpeedController driveLeft;
+	SpeedController driveRight;
 	Encoder encoderleft;
 	Encoder encoderright;
 	Command auton1;
@@ -83,10 +83,6 @@ public class Robot extends IterativeRobot {
 	CANTalon manipulator;
 	Gyro gyro;
 	AnalogInput analogin;
-//	PIDController pidRightfront;
-//	PIDController pidLeftfront;
-//	PIDController pidLeftrear;
-//	PIDController pidRightrear;
 	MotorPIDSubsystem leftSub;
 	MotorPIDSubsystem rightSub;
 
@@ -97,22 +93,14 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+
+
+		driveLeft = new Talon(0);
 		
-		driveLeftFrontBrown = new Talon(4);
-
-		driveLeftRearWhite = new Talon(1);
-
-		driveRightRearBlue = new Talon(3);
-
-		driveRightFrontOrange = new Talon(2);
-
-		//driveLeft = new Talon(0);
-		
-		//driveRight = new Talon(1);
+		driveRight = new Talon(1);
 		
 		manipulator = new CANTalon(2);
-		//myRobot = new RobotDrive(driveLeft, driveRight);
-		myRobot = new RobotDrive(driveLeftFrontBrown,driveLeftRearWhite,driveRightFrontOrange,driveRightRearBlue);
+		myRobot = new RobotDrive(driveLeft, driveRight);
 		stick = new Joystick(0);
 		oldrawcount = 0;
 		pdp = new PowerDistributionPanel();
@@ -143,19 +131,24 @@ public class Robot extends IterativeRobot {
 		gyro.setSensitivity(.007);
    	    gyro.initGyro();
    	    gyro.reset();
+   	   /*
    	    double velocityleft = 0.0;
    	    double velocityright = 0.0;
    	    final double pterm = 1;
    	    final double iterm = 0;
    	    final double dterm = 0;
    	    final double ffterm = 0;
+   	    */
 //   	    pidRightfront = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveRightFrontOrange);
 //   	    pidRightrear = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveRightRearBlue);
 //   	    pidLeftfront = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveLeftFrontBrown);
 //   	    pidLeftrear = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveLeftRearWhite);
-   	   
-   	    leftSub = new MotorPIDSubsystem( driveLeftFrontBrown, driveLeftRearWhite,encoderleft, "left");
-   	    leftSub = new MotorPIDSubsystem(driveRightFrontOrange, driveRightRearBlue, encoderright, "right");
+   	   /*
+   	    leftSub = new MotorPIDSubsystem("left", driveLeftFrontBrown, driveLeftRearWhite,encoderleft);
+   	    rightSub = new MotorPIDSubsystem("right", driveRightFrontOrange, driveRightRearBlue, encoderright);
+   	    leftSub.enable();
+   	    rightSub.enable();
+   	    */
    	    //analogin = new AnalogInput(0);
 		
 		//server = CameraServer.getInstance();
@@ -276,9 +269,10 @@ public class Robot extends IterativeRobot {
 //							pidLeftrear.setSetpoint(stick.getRawAxis(1));
 //							pidRightfront.setSetpoint(stick.getRawAxis(5));
 //							pidRightrear.setSetpoint(stick.getRawAxis(5));
-//							
-							leftSub.setSetpoint(stick.getRawAxis(1));
-							rightSub.setSetpoint(stick.getRawAxis(5));
+							
+							
+							//leftSub.setSetpoint(stick.getRawAxis(1)*2000);
+							//rightSub.setSetpoint(stick.getRawAxis(5)*2000);
 							/*
 							if(!manipulator.isFwdLimitSwitchClosed())
 							{
