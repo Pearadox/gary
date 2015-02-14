@@ -131,24 +131,11 @@ public class Robot extends IterativeRobot {
 		gyro.setSensitivity(.007);
    	    gyro.initGyro();
    	    gyro.reset();
-   	   /*
-   	    double velocityleft = 0.0;
-   	    double velocityright = 0.0;
-   	    final double pterm = 1;
-   	    final double iterm = 0;
-   	    final double dterm = 0;
-   	    final double ffterm = 0;
-   	    */
-//   	    pidRightfront = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveRightFrontOrange);
-//   	    pidRightrear = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveRightRearBlue);
-//   	    pidLeftfront = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveLeftFrontBrown);
-//   	    pidLeftrear = new PIDController(pterm, iterm, dterm, ffterm, encoderright, driveLeftRearWhite);
-   	   /*
+
    	    leftSub = new MotorPIDSubsystem("left", driveLeftFrontBrown, driveLeftRearWhite,encoderleft);
    	    rightSub = new MotorPIDSubsystem("right", driveRightFrontOrange, driveRightRearBlue, encoderright);
    	    leftSub.enable();
    	    rightSub.enable();
-   	    */
    	    //analogin = new AnalogInput(0);
 		
 		//server = CameraServer.getInstance();
