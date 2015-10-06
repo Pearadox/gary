@@ -4,17 +4,17 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class MotorPIDSubsystem extends PIDSubsystem {
-	SpeedController motorFront;
-	SpeedController motorRear;
+	
+	SpeedController Motor;
 	Encoder encoder;
 	
 	
-	public MotorPIDSubsystem(String name, SpeedController front, SpeedController rear,
+	public MotorPIDSubsystem(String name, SpeedController motor,
 			Encoder enc) 
 	{
 		super(name, .5, 0.0, 0.0);
-		motorFront = front;
-		motorRear = rear;
+		
+		Motor = motor;
 		encoder = enc;
 		
 	}
@@ -31,8 +31,8 @@ public class MotorPIDSubsystem extends PIDSubsystem {
 	
 	protected void usePIDOutput(double output) 
 	{
-		motorFront.pidWrite(output);
-		motorRear.pidWrite(output);
+		
+		Motor.pidWrite(output);
 	}
 
 	
