@@ -98,8 +98,6 @@ public class Robot extends IterativeRobot {
 		encoderright.setDistancePerPulse(1);
 		encoderleftinch= 23.7978;
 		encoderrightinch= 34.0308;
-		autoChooser = new SendableChooser();
-		demochooser = new SendableChooser();
 		aBtn= new JoystickButton(stick, 1);
 		bBtn = new JoystickButton(stick, 2);
 		xBtn = new JoystickButton(stick, 3);
@@ -154,7 +152,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit(){
 		
 		Scheduler.getInstance().removeAll();
-		if (modeSwitch.get())
+		/*if (modeSwitch.get())
 		{
 			demochooser.addDefault("boring drive", demoMode);
 			demochooser.addObject("OVERHYPER DRIVE BETA", standardMode);
@@ -163,9 +161,9 @@ public class Robot extends IterativeRobot {
 		{
 			demochooser.addDefault("OVERHYPER DRIVE BETA", standardMode);
 			demochooser.addObject("boring drive", demoMode);
-		}
-		//demochooser.addDefault("boring drive", demoMode);
-		//demochooser.addObject("OVERHYPER DRIVE BETA", standardMode);
+		}*/
+		demochooser.addDefault("boring drive", demoMode);
+		demochooser.addObject("OVERHYPER DRIVE BETA", standardMode);
 		SmartDashboard.putData("Drive Mode Chooser", demochooser);
 		demoCommand =  (Command)demochooser.getSelected();
 		demoCommand.start();
@@ -180,6 +178,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 	
 		Scheduler.getInstance().run();
+	
 	
 	}
 	
