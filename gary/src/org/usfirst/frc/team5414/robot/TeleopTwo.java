@@ -29,12 +29,11 @@ public class TeleopTwo extends Command{
 	PowerDistributionPanel powerDist;
 	Gyro gyrate;
 	CANTalon manipulate;
-	DoubleSolenoid DoubleSolenoid1;
-	DoubleSolenoid DoubleSolenoid2;
+
 
 	public TeleopTwo(SpeedController leftCon, SpeedController rightCon, RobotDrive drive, Encoder leftEnc,
 			Encoder rightEnc, Joystick controller, JoystickButton LBumper, JoystickButton RBumper, JoystickButton a, JoystickButton b, JoystickButton x, JoystickButton y, 
-			PowerDistributionPanel power, Gyro gyrator, CANTalon manipulating,  DoubleSolenoid solenoid1, DoubleSolenoid solenoid2)
+			PowerDistributionPanel power, Gyro gyrator, CANTalon manipulating)
 	{
 		leftSide = leftCon;
 		rightSide = rightCon;
@@ -47,8 +46,6 @@ public class TeleopTwo extends Command{
 		powerDist = power;
 		gyrate = gyrator;
 		manipulate = manipulating;
-		DoubleSolenoid1 = solenoid1;
-		DoubleSolenoid2 = solenoid2;
 		aBtn = a; 
 		bBtn = b;
 		xBtn = x;
@@ -92,29 +89,10 @@ public class TeleopTwo extends Command{
 		{
 			manipulate.set(0);
 		}
-	    if(aBtn.get())
-		{
-			DoubleSolenoid1.set(DoubleSolenoid.Value.kForward);
-		}
-		else if(bBtn.get())
-		{
-			DoubleSolenoid1.set(DoubleSolenoid.Value.kReverse);
-		}
-		if(xBtn.get())
-		{
-			DoubleSolenoid2.set(DoubleSolenoid.Value.kForward);
-		}
-		else if(yBtn.get())
-		{
-			DoubleSolenoid2.set(DoubleSolenoid.Value.kReverse);
-		}
-		else
-		{
-			DoubleSolenoid1.set(DoubleSolenoid.Value.kOff);
-			DoubleSolenoid2.set(DoubleSolenoid.Value.kOff);
+	
 			// Prints here are not a good idea because they flood the console
 		}
-	}
+	
 	
 	@Override
 	protected boolean isFinished() {

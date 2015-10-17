@@ -56,10 +56,7 @@ public class Robot extends IterativeRobot {
 	JoystickButton select;
 	JoystickButton start;
 	JoystickButton LS;
-	JoystickButton RS; 
-	Compressor myCompressor;	
-	DoubleSolenoid DoubleSolenoid1;
-	DoubleSolenoid DoubleSolenoid2;
+	JoystickButton RS; 	
 	SpeedController driveLeft;
 	SpeedController driveRight;
 	Encoder encoderleft;
@@ -79,7 +76,7 @@ public class Robot extends IterativeRobot {
 	CANTalon manipulator;
 	Gyro gyro;
 	AnalogInput analogin;
-	
+	DigitalInput modeSwitch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -91,14 +88,12 @@ public class Robot extends IterativeRobot {
 		driveLeft = new Talon(0);
 		driveRight = new Talon(1);
 		manipulator = new CANTalon(2);
-		boolean BharathIsTheBest = false;
 		myRobot = new RobotDrive(driveLeft, driveRight);
 		stick = new Joystick(0);
 		pdp = new PowerDistributionPanel();
 		potentiometer  = new AnalogPotentiometer(1,2);
 		encoderleft = new Encoder(0, 1, false, EncodingType.k4X);
 		encoderright = new Encoder(2, 3, true, EncodingType.k4X);
-		boolean Aidenissexy = false; 
 		encoderleft.setDistancePerPulse(1);
 		encoderright.setDistancePerPulse(1);
 		encoderleftinch= 23.7978;
@@ -115,11 +110,8 @@ public class Robot extends IterativeRobot {
 		start = new JoystickButton(stick, 8);
 		LS = new JoystickButton(stick, 9);
 		RS = new JoystickButton(stick, 10);
-		myCompressor = new Compressor(0);
 		limitSwitchUpper = new DigitalInput(8);
 		limitSwitchLower = new DigitalInput(9);
-		DoubleSolenoid1 = new DoubleSolenoid(0,1);
-		DoubleSolenoid2 = new DoubleSolenoid(2,3);
 		offset = 57*8;
 		autocounter = 0;
 		gyro = new Gyro(0);
@@ -128,9 +120,9 @@ public class Robot extends IterativeRobot {
    	    gyro.reset();
    	    auton1 = new AutonomousOne(driveLeft, driveRight, myRobot, encoderleft, encoderright);
 		auton2 = new AutonomousTwo(driveLeft, driveRight, myRobot, encoderleft, encoderright, manipulator);
-		standardMode = new TeleopOne(driveLeft, driveRight, myRobot, encoderleft, encoderright, stick, LB, RB, aBtn, bBtn, xBtn, yBtn, pdp, gyro, manipulator, DoubleSolenoid1, DoubleSolenoid2);
-		demoMode = new TeleopTwo(driveLeft, driveRight, myRobot, encoderleft, encoderright, stick, LB, RB, aBtn, bBtn, xBtn, yBtn, pdp, gyro, manipulator, DoubleSolenoid1, DoubleSolenoid2);
-		
+		standardMode = new TeleopOne(driveLeft, driveRight, myRobot, encoderleft, encoderright, stick, LB, RB, aBtn, bBtn, xBtn, yBtn, pdp, gyro, manipulator);
+		demoMode = new TeleopTwo(driveLeft, driveRight, myRobot, encoderleft, encoderright, stick, LB, RB, aBtn, bBtn, xBtn, yBtn, pdp, gyro, manipulator);
+		modeSwitch = new DigitalInput(6);
 	}
 	
 	/**
@@ -160,10 +152,20 @@ public class Robot extends IterativeRobot {
 	 * This function is called once each time the robot enters tele-operated mode
 	 */
 	public void teleopInit(){
-	
+		
 		Scheduler.getInstance().removeAll();
-		demochooser.addDefault("boring drive", demoMode);
-		demochooser.addObject("OVERHYPER DRIVE BETA", standardMode);
+		if (modeSwitch.get())
+		{
+			demochooser.addDefault("boring drive", demoMode);
+			demochooser.addObject("OVERHYPER DRIVE BETA", standardMode);
+		}
+		else
+		{
+			demochooser.addDefault("OVERHYPER DRIVE BETA", standardMode);
+			demochooser.addObject("boring drive", demoMode);
+		}
+		//demochooser.addDefault("boring drive", demoMode);
+		//demochooser.addObject("OVERHYPER DRIVE BETA", standardMode);
 		SmartDashboard.putData("Drive Mode Chooser", demochooser);
 		demoCommand =  (Command)demochooser.getSelected();
 		demoCommand.start();
