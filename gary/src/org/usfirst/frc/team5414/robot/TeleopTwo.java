@@ -62,7 +62,7 @@ public class TeleopTwo extends Command{
 		protected void execute() {
 		// TODO Auto-generated method stub
 		//makes the robot drive
-		Brodin.tankDrive(cont.getRawAxis(1)*.7, cont.getRawAxis(5)*.7);
+		Brodin.tankDrive(cont.getRawAxis(1)*.85, cont.getRawAxis(5)*.85);
 		//puts #'s on the smart dashboard
 		SmartDashboard.putNumber("front left current", powerDist.getCurrent(15));
 		SmartDashboard.putNumber("front right current", powerDist.getCurrent(1));
