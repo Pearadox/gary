@@ -50,6 +50,14 @@ public class TeleopTwo extends Command{
 		bBtn = b;
 		xBtn = x;
 		yBtn = y;
+		
+		manipulate.reverseOutput(true);
+		manipulate.reverseSensor(true);
+		manipulate.enableLimitSwitch(true, true);
+		manipulate.ConfigFwdLimitSwitchNormallyOpen(true);
+		manipulate.ConfigRevLimitSwitchNormallyOpen(true);
+		manipulate.enableControl();
+		
 	}
 	@Override
 	protected void initialize() {
