@@ -29,14 +29,12 @@ public class AutonomousOne extends Command {
 	
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 		leftEncoder.reset();
 		rightEncoder.reset();
 	}
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		SmartDashboard.putNumber("left encoder counts", leftEncoder.get());
 	    SmartDashboard.putNumber("right encoder counts", rightEncoder.get());
 	  //moves the robot forward at 80% speed for 145 inches  

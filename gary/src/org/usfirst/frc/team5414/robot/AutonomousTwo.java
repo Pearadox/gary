@@ -38,7 +38,6 @@ public class AutonomousTwo extends Command{
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 		SmartDashboard.putNumber("left encoder counts", leftEncoder.get());
 	    SmartDashboard.putNumber("right encoder counts", rightEncoder.get());
 	  //moves arm up to grab tote

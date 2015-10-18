@@ -60,7 +60,6 @@ public class TeleopOne extends Command {
 	}
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 
 		leftEncoder.reset();
 		rightEncoder.reset();
@@ -68,7 +67,6 @@ public class TeleopOne extends Command {
 
 	@Override
 	protected void execute() {
-		// TODO Auto-generated method stub
 	    //drives the robot	
 		Brodin.tankDrive(cont.getRawAxis(1), cont.getRawAxis(5));
 		//puts #'s on the smart dashboard

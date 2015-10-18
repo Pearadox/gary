@@ -59,14 +59,12 @@ public class TeleopTwo extends Command{
 	}
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 
 		leftEncoder.reset();
 		rightEncoder.reset();
 	}
 		@Override
 		protected void execute() {
-		// TODO Auto-generated method stub
 		//makes the robot drive
 		Brodin.tankDrive(cont.getRawAxis(1)*.85, cont.getRawAxis(5)*.85);
 		//puts #'s on the smart dashboard
